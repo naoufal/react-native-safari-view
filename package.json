@@ -1,0 +1,31 @@
+{
+  "name": "react-native-safari-view",
+  "version": "0.1.0",
+  "description": "A React Native wrapper for Safari View Controller",
+  "main": "SafariViewMananger.ios.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naoufal/react-native-safari-view.git"
+  },
+  "keywords": [
+    "react-native",
+    "react",
+    "native",
+    "webview",
+    "web",
+    "view",
+    "safari",
+    "safariview",
+    "react-component",
+    "react-native-component"
+  ],
+  "author": "Naoufal Kadhom <naoufalkadhom@gmail.com> (https://github.com/naoufal)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naoufal/react-native-safari-view/issues"
+  },
+  "homepage": "https://github.com/naoufal/react-native-safari-view"
+}
