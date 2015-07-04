@@ -2,7 +2,7 @@
   "name": "react-native-safari-view",
   "version": "0.1.0",
   "description": "A React Native wrapper for Safari View Controller",
-  "main": "SafariViewMananger.ios.js",
+  "main": "index.ios.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
