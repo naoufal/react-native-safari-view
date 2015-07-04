@@ -4,7 +4,8 @@
  */
 'use strict';
 
-var NativeSafariViewManager = require('NativeModules').SafariViewManager;
+var NativeModules = require('react-native').NativeModules;
+var NativeSafariViewManager = NativeModules.SafariViewManager;
 var invariant = require('invariant');
 
 /**
