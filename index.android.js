@@ -10,7 +10,7 @@ var warning = require('warning');
 
 var SafariViewManager = {
   test: function() {
-    warning("Not yet implemented for Android.");
+    warning('Not yet implemented for Android.');
   }
 };
 
