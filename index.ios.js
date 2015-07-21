@@ -4,8 +4,8 @@
  */
 'use strict';
 
-var NativeSafariViewManager = require('NativeModules').SafariViewManager;
-var invariant = require('invariant');
+var NativeModules = require('react-native').NativeModules;
+var NativeSafariViewManager = NativeModules.SafariViewManager;
 
 /**
  * High-level docs for the SafariViewManager iOS API can be written here.
