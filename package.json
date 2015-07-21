@@ -4,7 +4,8 @@
   "description": "A React Native wrapper for Safari View Controller",
   "main": "index.ios.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "node_modules/.bin/eslint .",
+    "test": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,9 @@
   "bugs": {
     "url": "https://github.com/naoufal/react-native-safari-view/issues"
   },
-  "homepage": "https://github.com/naoufal/react-native-safari-view"
+  "homepage": "https://github.com/naoufal/react-native-safari-view",
+  "devDependencies": {
+    "eslint": "0.24.1",
+    "eslint-plugin-react": "3.0.0"
+  }
 }
