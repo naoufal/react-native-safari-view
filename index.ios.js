@@ -14,7 +14,7 @@ var NativeSafariViewManager = NativeModules.SafariViewManager;
 var SafariViewManager = {
   show: function(options) {
     return new Promise(function(resolve, reject) {
-      NativeSafariViewManager.show(options, function(error, success) {
+      NativeSafariViewManager.show(options, function(error) {
         if (error) {
           return reject(error);
         }
@@ -24,9 +24,9 @@ var SafariViewManager = {
     });
   },
 
-  isAvailable: function(options) {
+  isAvailable: function() {
     return new Promise(function(resolve, reject) {
-      NativeSafariViewManager.isAvailable(function(error, success) {
+      NativeSafariViewManager.isAvailable(function(error) {
         if (error) {
           return reject(error);
         }
@@ -34,7 +34,7 @@ var SafariViewManager = {
         resolve(true);
       });
     });
-  },
+  }
 };
 
 module.exports = SafariViewManager;
