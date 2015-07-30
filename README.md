@@ -24,7 +24,7 @@ npm i --save react-native-safari-view
 
 ## Usage
 ### Linking the Library
-In order to use Safari View, you must first link the library your project.  There's excellent documentation on how to do this in the [React Native Docs](https://facebook.github.io/react-native/docs/linking-libraries.html#content).
+In order to use Safari View, you must first link the library your project.  There's excellent documentation on how to do this in the [React Native Docs](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
 ### Displaying the Safari View
 Once you've linked the library, you'll want to make it available to your app by requiring it:
