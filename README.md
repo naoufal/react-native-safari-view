@@ -41,9 +41,14 @@ SafariView.show({
 ## Example
 Using Safari View in your app will usually look like this:
 ```js
-var SafariView = require('react-native-safari-view');
+import React, { Component } from "react";
+import SafariView from "react-native-safari-view";
 
-var YourComponent = React.createClass({
+class YourComponent extends Component {
+  constructor(props) {
+    super(props);
+  }
+  
   _pressHandler() {
     SafariView.isAvailable()
       .then(SafariView.show({
@@ -52,7 +57,7 @@ var YourComponent = React.createClass({
       .catch(error => {
         // Fallback WebView code for iOS 8 and earlier
       });
-  },
+  }
 
   render() {
     return (
@@ -64,7 +69,7 @@ var YourComponent = React.createClass({
       </View>
     );
   }
-});
+}
 ```
 
 ## Methods
