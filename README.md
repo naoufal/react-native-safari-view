@@ -1,12 +1,10 @@
-# react-native-safari-view
+# React Native Safari View
 
 [![npm version](https://img.shields.io/npm/v/react-native-safari-view.svg?style=flat-square)](https://www.npmjs.com/package/react-native-safari-view)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-safari-view.svg?style=flat-square)](https://www.npmjs.com/package/react-native-safari-view)
 [![Code Climate](https://img.shields.io/codeclimate/github/naoufal/react-native-safari-view.svg?style=flat-square)](https://codeclimate.com/github/naoufal/react-native-safari-view)
 
-__`react-native-safari-view`__ is a [Safari View Controller](https://developer.apple.com/videos/wwdc/2015/?id=504) wrapper for [React Native](https://facebook.github.io/react-native/).
-
-__Note: Safari View Controller is only available in [iOS 9](http://www.apple.com/ios/ios9-preview/), which is currently in beta.__
+React Native Safari View is a [Safari View Controller](https://developer.apple.com/videos/wwdc/2015/?id=504) wrapper for [React Native](https://facebook.github.io/react-native/).
 
 ![react-native-safari-view](https://cloud.githubusercontent.com/assets/1627824/8345135/ed5f7fc4-1ab8-11e5-814a-a3e9df0ede06.gif)
 
@@ -104,7 +102,7 @@ SafariView.isAvailable()
 ```
 
 ## License
-Copyright (c) 2015, Naoufal Kadhom
+Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com)
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
