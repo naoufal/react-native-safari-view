@@ -1,8 +1,10 @@
 #import "SafariViewManager.h"
 #import "RCTUtils.h"
 #import "RCTLog.h"
+#import "RCTEventDispatcher.h"
 
 @implementation SafariViewManager
+@synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE()
 
@@ -38,6 +40,8 @@ RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
 {
     [controller dismissViewControllerAnimated:true completion:nil];
     NSLog(@"SafariView dismissed.");
+    
+    [self.bridge.eventDispatcher sendAppEventWithName:@"SafariView" body:@{@"action": @"closed"}];
 }
 
 @end
