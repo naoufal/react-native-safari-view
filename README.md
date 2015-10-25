@@ -13,6 +13,7 @@ React Native Safari View is a [Safari View Controller](https://developer.apple.c
 - [Usage](https://github.com/naoufal/react-native-safari-view#usage)
 - [Example](https://github.com/naoufal/react-native-safari-view#example)
 - [Methods](https://github.com/naoufal/react-native-safari-view#methods)
+- [Events](https://github.com/naoufal/react-native-safari-view#events)
 - [License](https://github.com/naoufal/react-native-safari-view#license)
 
 ## Install
@@ -48,11 +49,11 @@ class YourComponent extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   _pressHandler() {
     SafariView.isAvailable()
       .then(SafariView.show({
-        url: 'https://github.com/naoufal'
+        url: "https://github.com/naoufal"
       }))
       .catch(error => {
         // Fallback WebView code for iOS 8 and earlier
@@ -87,7 +88,7 @@ __safariOptions__
 __Examples__
 ```js
 SafariView.show({
-  url: 'http://facebook.github.io/react/blog/2015/03/26/introducing-react-native.html',
+  url: "http://facebook.github.io/react/blog/2015/03/26/introducing-react-native.html",
   readerMode: true // optional
 });
 ```
@@ -99,11 +100,36 @@ __Example__
 ```js
 SafariView.isAvailable()
   .then(available => {
-    console.log('SafariView is available.');
+    console.log("SafariView is available.");
   })
   .catch(error => {
     console.log(error);
   });
+```
+
+## Events
+The following events are fired by the Safari View.
+
+### SafariViewOnShow
+__Example__
+```js
+let showSubscription = NativeAppEventEmitter.addListener(
+  "SafariViewOnShow",
+  () => {
+    StatusBarIOS.setStyle("light-content");
+  }
+);
+```
+
+### SafariViewOnDismiss
+__Example__
+```js
+let dismissSubscription = NativeAppEventEmitter.addListener(
+  "SafariViewOnDismiss",
+  () => {
+    StatusBarIOS.setStyle("default");
+  }
+);
 ```
 
 ## License
@@ -112,3 +138,4 @@ Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com)
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
