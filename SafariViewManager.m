@@ -1,26 +1,31 @@
 #import "SafariViewManager.h"
 #import "RCTUtils.h"
 #import "RCTLog.h"
+#import "RCTEventDispatcher.h"
 
 @implementation SafariViewManager
+@synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
 {
+
     // Error if no url is passed
     if (!args[@"url"]) {
         RCTLogError(@"[SafariView] You must specify a url.");
         return;
     }
-    
+
     // Initialize the Safari View
     SFSafariViewController *safariView = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:args[@"url"]] entersReaderIfAvailable:args[@"readerMode"]];
     safariView.delegate = self;
-    
+
     // Display the Safari View
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [ctrl presentViewController:safariView animated:YES completion:nil];
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnShow" body:nil];
 }
 
 RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
@@ -29,7 +34,7 @@ RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
         // SafariView is available
         return callback(@[[NSNull null], @true]);
     } else {
-        return callback(@[RCTMakeError(@"SafariView is unavailable.", nil, nil)]);
+        return callback(@[RCTMakeError(@"[SafariView] SafariView is unavailable.", nil, nil)]);
     }
 }
 
@@ -37,7 +42,9 @@ RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
 -(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller
 {
     [controller dismissViewControllerAnimated:true completion:nil];
-    NSLog(@"SafariView dismissed.");
+    NSLog(@"[SafariView] SafariView dismissed.");
+
+    [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnDismiss" body:nil];
 }
 
 @end
