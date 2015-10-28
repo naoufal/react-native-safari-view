@@ -38,6 +38,10 @@ RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
     }
 }
 
+RCT_EXPORT_METHOD(dismiss)
+{
+    [self safariViewControllerDidFinish:self.safariView];
+}
 
 -(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller
 {

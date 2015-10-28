@@ -24,6 +24,10 @@ var SafariViewManager = {
     });
   },
 
+  dismiss: function() {
+    NativeSafariViewManager.dismiss();
+  },
+
   isAvailable: function() {
     return new Promise(function(resolve, reject) {
       NativeSafariViewManager.isAvailable(function(error) {
