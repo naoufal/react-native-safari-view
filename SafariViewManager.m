@@ -18,12 +18,12 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     }
 
     // Initialize the Safari View
-    SFSafariViewController *safariView = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:args[@"url"]] entersReaderIfAvailable:args[@"readerMode"]];
-    safariView.delegate = self;
+    self.safariView = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:args[@"url"]] entersReaderIfAvailable:args[@"readerMode"]];
+    self.safariView.delegate = self;
 
     // Display the Safari View
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [ctrl presentViewController:safariView animated:YES completion:nil];
+    [ctrl presentViewController:self.safariView animated:YES completion:nil];
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnShow" body:nil];
 }
