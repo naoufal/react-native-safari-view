@@ -1,6 +1,7 @@
 #import "SafariViewManager.h"
 #import "RCTUtils.h"
 #import "RCTLog.h"
+#import "RCTConvert.h"
 #import "RCTEventDispatcher.h"
 
 @implementation SafariViewManager
@@ -15,6 +16,7 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
 {
+    UIColor *tintColorString = args[@"tintColor"];
 
     // Error if no url is passed
     if (!args[@"url"]) {
@@ -25,6 +27,12 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     // Initialize the Safari View
     self.safariView = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:args[@"url"]] entersReaderIfAvailable:args[@"readerMode"]];
     self.safariView.delegate = self;
+
+    // Set tintColor if available
+    if (tintColorString) {
+        UIColor *tintColor = [RCTConvert UIColor:tintColorString];
+        [self.safariView.view setTintColor:tintColor];
+    }
 
     // Display the Safari View
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
