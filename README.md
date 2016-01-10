@@ -79,17 +79,19 @@ class YourComponent extends Component {
 Displays a Safari View with the provided url.
 
 __Arguments__
-- `safariOptions` - An `Object` containing a `url` key and optionally a `readerMode` key.
+- `safariOptions` - An `Object` containing a `url` key and optionally a `readerMode` key and/or a `tintColor`.
 
 __safariOptions__
 - `url` - A `String` containing the url you want to load in the Safari View
 - `readerMode` - A `Boolean` indicating to use Safari's Reader Mode if available
+- `tintColor` - A `String` containing a hex, rgba or rgba color
 
 __Examples__
 ```js
 SafariView.show({
   url: "http://facebook.github.io/react/blog/2015/03/26/introducing-react-native.html",
-  readerMode: true // optional
+  readerMode: true // optional,
+  tintColor: "#000" // optional
 });
 ```
 
