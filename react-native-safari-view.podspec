@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "react-native-safari-view"
-  s.version          = "0.1.4"
+  s.version          = "0.3.0"
   s.summary          = "A React Native wrapper for Safari View Controller"
   s.requires_arc = true
   s.author       = { 'Naoufal Kadhom' => 'naoufalkadhom@gmail.com' }
