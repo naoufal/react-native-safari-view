@@ -4,6 +4,7 @@ import React, {
   AppRegistry,
   Component,
   NativeAppEventEmitter,
+  processColor,
   StatusBarIOS,
   StyleSheet,
   Text,
@@ -66,7 +67,8 @@ class SafariViewExample extends Component {
   _clickHandler() {
     SafariView.show({
       url: 'http://twitter.com/naoufal',
-      readerMode: true
+      readerMode: true,
+      tintColor: "rgb(0, 0, 0)"
     });
   }
 
