@@ -115,7 +115,7 @@ The following events are fired by the Safari View.
 ### onShow
 __Example__
 ```js
-let showSubscription = SafariView.addEventListener(''
+let showSubscription = SafariView.addEventListener(
   "onShow",
   () => {
     StatusBarIOS.setStyle("light-content");
