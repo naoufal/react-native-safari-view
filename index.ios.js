@@ -52,7 +52,7 @@ var SafariViewManager = {
   addEventListener(event, listener) {
     if (event === 'onShow') {
       DeviceEventEmitter.addListener('SafariViewOnShow', listener);
-    } else if (event == 'onDismiss') {
+    } else if (event === 'onDismiss') {
       NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
     }
   },
@@ -60,7 +60,7 @@ var SafariViewManager = {
   removeEventListener(event, listener) {
     if (event === 'onShow') {
       DeviceEventEmitter.removeListener('SafariViewOnShow', listener);
-    } else if (event == 'onDismiss') {
+    } else if (event === 'onDismiss') {
       NativeAppEventEmitter.removeListener('SafariViewOnDismiss', listener);
     }
   }
