@@ -3,7 +3,6 @@ import React, {
   AlertIOS,
   AppRegistry,
   Component,
-  NativeAppEventEmitter,
   processColor,
   StatusBarIOS,
   StyleSheet,
@@ -16,26 +15,21 @@ import SafariView from 'react-native-safari-view';
 
 class SafariViewExample extends Component {
   componentDidMount() {
-    this.showSubscription = NativeAppEventEmitter.addListener(
-      'SafariViewShow', () => {
-        console.log("SafariViewShow")
-
-        StatusBarIOS.setStyle("light-content");
-      }
-    );
-
-    this.dismissSubscription = NativeAppEventEmitter.addListener(
-      'SafariViewDismiss', () => {
-        console.log("SafariViewDismiss");
-
-        StatusBarIOS.setStyle("default");
-      }
-    );
+    this.showSubscription = () => {
+      console.log("SafariView onShow")
+      StatusBarIOS.setStyle("light-content");
+    };
+    this.dismissSubscription = () => {
+      console.log("SafariView onDismiss");
+      StatusBarIOS.setStyle("default");
+    };
+    SafariView.addEventListener("onShow", this.showSubscription);
+    SafariView.addEventListener("onDismiss", this.dismissSubscription);
   }
 
   componentWillUnmount() {
-    this.showSubscription.remove();
-    this.dismissSubscription.remove();
+    SafariView.removeEventListener("onShow", this.showSubscription);
+    SafariView.removeEventListener("onDismiss", this.dismissSubscription);
   }
 
   render() {

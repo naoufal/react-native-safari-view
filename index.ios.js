@@ -6,6 +6,8 @@
 
 const {
   NativeModules,
+  NativeAppEventEmitter,
+  DeviceEventEmitter,
   processColor
 } = require('react-native');
 const NativeSafariViewManager = NativeModules.SafariViewManager;
@@ -45,6 +47,22 @@ var SafariViewManager = {
         resolve(true);
       });
     });
+  },
+
+  addEventListener(event, listener) {
+    if (event === 'onShow') {
+      DeviceEventEmitter.addListener('SafariViewOnShow', listener);
+    } else if (event === 'onDismiss') {
+      NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
+    }
+  },
+
+  removeEventListener(event, listener) {
+    if (event === 'onShow') {
+      DeviceEventEmitter.removeListener('SafariViewOnShow', listener);
+    } else if (event === 'onDismiss') {
+      NativeAppEventEmitter.removeListener('SafariViewOnDismiss', listener);
+    }
   }
 };
 
