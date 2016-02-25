@@ -112,22 +112,22 @@ SafariView.isAvailable()
 ## Events
 The following events are fired by the Safari View.
 
-### SafariViewOnShow
+### onShow
 __Example__
 ```js
-let showSubscription = NativeAppEventEmitter.addListener(
-  "SafariViewOnShow",
+let showSubscription = SafariView.addEventListener(''
+  "onShow",
   () => {
     StatusBarIOS.setStyle("light-content");
   }
 );
 ```
 
-### SafariViewOnDismiss
+### onDismiss
 __Example__
 ```js
-let dismissSubscription = NativeAppEventEmitter.addListener(
-  "SafariViewOnDismiss",
+let dismissSubscription = SafariView.addEventListener(
+  "onDismiss",
   () => {
     StatusBarIOS.setStyle("default");
   }
