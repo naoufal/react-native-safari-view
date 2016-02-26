@@ -4,6 +4,8 @@
 #import "RCTConvert.h"
 #import "RCTEventDispatcher.h"
 
+#define ReactNativeSafariView "ReactNativeSafariView"
+
 @implementation SafariViewManager
 @synthesize bridge = _bridge;
 
@@ -39,6 +41,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     [ctrl presentViewController:self.safariView animated:YES completion:nil];
 
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnShow" body:nil];
+    [self registerNotificationObserver];
 }
 
 RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
@@ -60,8 +63,26 @@ RCT_EXPORT_METHOD(dismiss)
 {
     [controller dismissViewControllerAnimated:true completion:nil];
     NSLog(@"[SafariView] SafariView dismissed.");
-
+    [self unregisterNotificationObserver];
     [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnDismiss" body:nil];
+}
+
+-(void)registerNotificationObserver
+{
+  CFNotificationCenterRef notification = CFNotificationCenterGetDarwinNotifyCenter ();
+  CFNotificationCenterAddObserver(notification, (__bridge const void *)(self), observerMethod, CFSTR(ReactNativeSafariView), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+}
+
+-(void)unregisterNotificationObserver
+{
+  CFNotificationCenterRef notification = CFNotificationCenterGetDarwinNotifyCenter();
+  CFNotificationCenterRemoveObserver(notification, (__bridge const void *)(self), CFSTR(ReactNativeSafariView), NULL);
+}
+
+void observerMethod (CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+  SafariViewManager *self = (__bridge SafariViewManager *)(observer);
+  [self safariViewControllerDidFinish:self.safariView];
 }
 
 @end
