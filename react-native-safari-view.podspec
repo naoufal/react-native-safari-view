@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'
   s.homepage     = 'https://github.com/naoufal/react-native-safari-view'
   s.source       = { :git => "https://github.com/naoufal/react-native-safari-view.git" }
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "7.0"
   s.dependency 'React'
   s.source_files     = "*.{h,m}"
   s.preserve_paths   = "*.js"
