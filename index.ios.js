@@ -12,6 +12,11 @@ const {
 } = require('react-native');
 const NativeSafariViewManager = NativeModules.SafariViewManager;
 
+var listeners = {
+  onShow: {},
+  onDismiss: {}
+};
+
 /**
  * High-level docs for the SafariViewManager iOS API can be written here.
  */
@@ -51,18 +56,19 @@ var SafariViewManager = {
 
   addEventListener(event, listener) {
     if (event === 'onShow') {
-      DeviceEventEmitter.addListener('SafariViewOnShow', listener);
+      listeners[event][listener] = DeviceEventEmitter.addListener('SafariViewOnShow', listener);
     } else if (event === 'onDismiss') {
-      NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
+      listeners[event][listener] = NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
     }
   },
 
   removeEventListener(event, listener) {
-    if (event === 'onShow') {
-      DeviceEventEmitter.removeListener('SafariViewOnShow', listener);
-    } else if (event === 'onDismiss') {
-      NativeAppEventEmitter.removeListener('SafariViewOnDismiss', listener);
+    if (!listeners[event] || !listeners[event][listener]) {
+      return;
     }
+
+    listeners[event][listener].remove();
+    listeners[event][listener] = null;
   }
 };
 
