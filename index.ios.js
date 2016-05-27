@@ -51,9 +51,9 @@ var SafariViewManager = {
 
   addEventListener(event, listener) {
     if (event === 'onShow') {
-      DeviceEventEmitter.addListener('SafariViewOnShow', listener);
+      return DeviceEventEmitter.addListener('SafariViewOnShow', listener);
     } else if (event === 'onDismiss') {
-      NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
+      return NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
     }
   },
 
