@@ -1,10 +1,11 @@
 'use strict';
-import React, {
+
+import React, { Component } from 'react'
+import {
   AlertIOS,
   AppRegistry,
-  Component,
   processColor,
-  StatusBarIOS,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -13,15 +14,17 @@ import React, {
 
 import SafariView from 'react-native-safari-view';
 
+console.log(SafariView)
+
 class SafariViewExample extends Component {
   componentDidMount() {
-    this.showSubscription = () => {
+    this.showSubscription= () => {
       console.log("SafariView onShow")
-      StatusBarIOS.setStyle("light-content");
+      StatusBar.setBarStyle("light-content");
     };
     this.dismissSubscription = () => {
       console.log("SafariView onDismiss");
-      StatusBarIOS.setStyle("default");
+      StatusBar.setBarStyle("default");
     };
     SafariView.addEventListener("onShow", this.showSubscription);
     SafariView.addEventListener("onDismiss", this.dismissSubscription);
