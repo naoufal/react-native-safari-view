@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/naoufal/react-native-safari-view",
   "devDependencies": {
-    "eslint": "0.24.1",
+    "eslint": "2.0.0",
     "eslint-plugin-react": "3.0.0"
   }
 }
