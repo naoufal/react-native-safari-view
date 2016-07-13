@@ -1,6 +1,5 @@
 /**
  * @providesModule SafariViewManager
- * @flow
  */
 'use strict';
 import {
