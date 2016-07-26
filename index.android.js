@@ -2,7 +2,6 @@
  * Stub of SafariViewManager for Android.
  *
  * @providesModule SafariViewManager
- * @flow
  */
 'use strict';
 
