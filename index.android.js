@@ -9,8 +9,6 @@ const {NativeModules} = require('react-native');
 const NativeSafariViewManager = NativeModules.SafariViewManager;
 
 var SafariViewManager = {
-  test: function() {
-  },
   isAvailable: function() {
     return new Promise(function(resolve, reject) {
       NativeSafariViewManager.isAvailable(function(error) {
