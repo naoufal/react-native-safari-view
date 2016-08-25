@@ -14,6 +14,13 @@ const NativeSafariViewManager = NativeModules.SafariViewManager;
  * High-level docs for the SafariViewManager iOS API can be written here.
  */
 
+function publicToDeviceEvent(event) {
+  if (['onShow', 'onDismiss', 'onShowComplete', 'onDismissComplete'].indexOf(event) >= 0) {
+    return event.replace('on', 'SafariViewOn');
+  }
+  return false;
+}
+
 export default {
   show(options) {
     if (options && options.tintColor) {
@@ -32,7 +39,9 @@ export default {
   },
 
   dismiss() {
-    NativeSafariViewManager.dismiss();
+    return new Promise((resolve, reject) => {
+      NativeSafariViewManager.dismiss(error => error ? reject(error) : resolve(true));
+    });
   },
 
   isAvailable() {
@@ -48,18 +57,16 @@ export default {
   },
 
   addEventListener(event, listener) {
-    if (event === 'onShow') {
-      return DeviceEventEmitter.addListener('SafariViewOnShow', listener);
-    } else if (event === 'onDismiss') {
-      return NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
+    const deviceEvent = publicToDeviceEvent(event);
+    if (deviceEvent) {
+      return DeviceEventEmitter.addListener(deviceEvent, listener);
     }
   },
 
   removeEventListener(event, listener) {
-    if (event === 'onShow') {
-      DeviceEventEmitter.removeListener('SafariViewOnShow', listener);
-    } else if (event === 'onDismiss') {
-      NativeAppEventEmitter.removeListener('SafariViewOnDismiss', listener);
+    const deviceEvent = publicToDeviceEvent(event);
+    if (deviceEvent) {
+      return DeviceEventEmitter.removeListener(deviceEvent, listener);
     }
   }
 };

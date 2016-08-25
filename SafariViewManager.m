@@ -14,7 +14,7 @@ RCT_EXPORT_MODULE()
   return dispatch_get_main_queue();
 }
 
-RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(show:(NSDictionary *)args completion:(RCTResponseSenderBlock)callback)
 {
     UIColor *tintColorString = args[@"tintColor"];
 
@@ -36,7 +36,10 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
 
     // Display the Safari View
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [ctrl presentViewController:self.safariView animated:YES completion:nil];
+    [ctrl presentViewController:self.safariView animated:YES completion:^{
+        [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnShowComplete" body:nil];
+        callback(@[[NSNull null]]);
+    }];
 
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnShow" body:nil];
 }
@@ -51,14 +54,17 @@ RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
     }
 }
 
-RCT_EXPORT_METHOD(dismiss)
+RCT_EXPORT_METHOD(dismiss: (RCTResponseSenderBlock)callback)
 {
-    [self safariViewControllerDidFinish:self.safariView];
+    [self safariViewControllerDidFinish:self.safariView completion:callback];
 }
 
--(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller
+-(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller completion:(RCTResponseSenderBlock)callback
 {
-    [controller dismissViewControllerAnimated:true completion:nil];
+    [controller dismissViewControllerAnimated:true completion:^{
+        [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnDismissComplete" body:nil];
+        return callback(@[[NSNull null]]);
+    }];
     NSLog(@"[SafariView] SafariView dismissed.");
 
     [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnDismiss" body:nil];
