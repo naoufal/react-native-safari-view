@@ -17,6 +17,7 @@ RCT_EXPORT_MODULE()
 RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
 {
     UIColor *tintColorString = args[@"tintColor"];
+    BOOL fromBottom = [args[@"fromBottom"] boolValue];
 
     // Error if no url is passed
     if (!args[@"url"]) {
@@ -32,6 +33,11 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     if (tintColorString) {
         UIColor *tintColor = [RCTConvert UIColor:tintColorString];
         [self.safariView.view setTintColor:tintColor];
+    }
+
+    // Set modal transition style
+    if(fromBottom) {
+        self.safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
 
     // Display the Safari View
