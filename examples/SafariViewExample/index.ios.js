@@ -65,7 +65,8 @@ class SafariViewExample extends Component {
     SafariView.show({
       url: 'http://twitter.com/naoufal',
       readerMode: true,
-      tintColor: "rgb(0, 0, 0)"
+      tintColor: "rgb(0, 0, 0)",
+      fromBottom: true
     });
   }
 
