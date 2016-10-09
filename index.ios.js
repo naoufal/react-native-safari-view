@@ -19,6 +19,9 @@ export default {
     if (options && options.tintColor) {
       options.tintColor = processColor(options.tintColor);
     }
+    if (options && options.barTintColor) {
+      options.barTintColor = processColor(options.barTintColor);
+    }
 
     return new Promise((resolve, reject) => {
       NativeSafariViewManager.show(options, (error) => {
