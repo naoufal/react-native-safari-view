@@ -3,10 +3,8 @@
 #import "RCTUtils.h"
 #import "RCTLog.h"
 #import "RCTConvert.h"
-#import "RCTEventDispatcher.h"
 
 @implementation SafariViewManager
-@synthesize bridge = _bridge;
 
 RCT_EXPORT_MODULE()
 
@@ -58,7 +56,9 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [ctrl presentViewController:self.safariView animated:YES completion:nil];
 
-    [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnShow" body:nil];
+    if (self.hasListeners) {
+        [self sendEventWithName:@"onShow" body:nil];
+    }
 }
 
 RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
@@ -76,12 +76,26 @@ RCT_EXPORT_METHOD(dismiss)
     [self safariViewControllerDidFinish:self.safariView];
 }
 
+-(void)startObserving {
+    self.hasListeners = YES;
+}
+
+-(void)stopObserving {
+    self.hasListeners = NO;
+}
+
+-(NSArray<NSString *> *)supportedEvents {
+    return @[@"onShow",@"onDismiss"];
+}
+
 -(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller
 {
     [controller dismissViewControllerAnimated:true completion:nil];
     NSLog(@"[SafariView] SafariView dismissed.");
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnDismiss" body:nil];
+    if (self.hasListeners) {
+        [self sendEventWithName:@"onDismiss" body:nil];
+    }
 }
 
 @end
