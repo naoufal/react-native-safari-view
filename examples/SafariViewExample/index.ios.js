@@ -14,8 +14,6 @@ import {
 
 import SafariView from 'react-native-safari-view';
 
-console.log(SafariView)
-
 class SafariViewExample extends Component {
   componentDidMount() {
     this.showSubscription= () => {

@@ -1,3 +1,3 @@
-const SafariView = require('./index');
+import SafariViewManager from './SafariViewManager';
 
-module.exports = SafariView;
+export default SafariViewManager;
