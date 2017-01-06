@@ -1,9 +1,9 @@
 
 #import "SafariViewManager.h"
-#import "RCTUtils.h"
-#import "RCTLog.h"
-#import "RCTConvert.h"
-#import "RCTEventDispatcher.h"
+#import <React/RCTUtils.h>
+#import <React/RCTLog.h>
+#import <React/RCTConvert.h>
+#import <React/RCTEventDispatcher.h>
 
 @implementation SafariViewManager
 @synthesize bridge = _bridge;
