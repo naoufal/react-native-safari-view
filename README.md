@@ -90,6 +90,7 @@ __safariOptions__
 - `readerMode` - A `Boolean` indicating to use Safari's Reader Mode if available
 - `tintColor` - A `String` containing a hex, rgba or rgba color to use for the browser controls
 - `barTintColor` - A `String` containing a hex, rgba or rgba color to use for the background of the browser controls (only available on iOS 10 and higher)
+- `fromBottom` - A 'Boolean' indicating to open the Safari View from the bottom
 
 __Examples__
 ```js
