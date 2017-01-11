@@ -116,6 +116,14 @@ SafariView.isAvailable()
   });
 ```
 
+### dismiss()
+Dismisses the currently active Safari View.
+
+__Example__
+```js
+SafariView.dismiss()
+```
+
 ## Events
 The following events are fired by the Safari View.
 
