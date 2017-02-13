@@ -81,7 +81,7 @@ RCT_EXPORT_METHOD(dismiss)
     [controller dismissViewControllerAnimated:true completion:nil];
     NSLog(@"[SafariView] SafariView dismissed.");
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnDismiss" body:nil];
+    [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnDismiss" body:nil];
 }
 
 @end
