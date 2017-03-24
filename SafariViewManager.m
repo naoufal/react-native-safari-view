@@ -1,4 +1,3 @@
-
 #import "SafariViewManager.h"
 #import <React/RCTUtils.h>
 #import <React/RCTLog.h>
@@ -55,8 +54,16 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     }
 
     // Display the Safari View
-    UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [ctrl presentViewController:self.safariView animated:YES completion:nil];
+    UIViewController *root  = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *maybeModal = root.presentedViewController;
+    
+    UIViewController *modalRoot = root;
+    
+    if (maybeModal != nil) {
+        modalRoot = maybeModal;
+    }
+    
+    [modalRoot presentViewController:self.safariView animated:YES completion:nil];
 
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnShow" body:nil];
 }
