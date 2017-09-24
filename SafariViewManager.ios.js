@@ -4,15 +4,17 @@
 'use strict';
 import {
   NativeModules,
-  NativeAppEventEmitter,
-  DeviceEventEmitter,
+  NativeEventEmitter,
   processColor
 } from 'react-native';
-const NativeSafariViewManager = NativeModules.SafariViewManager;
 
-/**
- * High-level docs for the SafariViewManager iOS API can be written here.
- */
+const NativeSafariViewManager = NativeModules.SafariViewManager;
+const eventEmitter = new NativeEventEmitter(NativeSafariViewManager);
+
+const subscriptions = {
+  onShow: new Map(),
+  onDismiss: new Map()
+};
 
 export default {
   show(options) {
@@ -51,18 +53,23 @@ export default {
   },
 
   addEventListener(event, listener) {
-    if (event === 'onShow') {
-      return DeviceEventEmitter.addListener('SafariViewOnShow', listener);
-    } else if (event === 'onDismiss') {
-      return NativeAppEventEmitter.addListener('SafariViewOnDismiss', listener);
+    if (!subscriptions[event]) {
+      console.warn(`Trying to subscribe to unknown event: "${event}"`);
+      return;
     }
+    const subscription = eventEmitter.addListener(event, listener);
+    subscriptions[event].set(listener, subscription);
   },
 
   removeEventListener(event, listener) {
-    if (event === 'onShow') {
-      DeviceEventEmitter.removeListener('SafariViewOnShow', listener);
-    } else if (event === 'onDismiss') {
-      NativeAppEventEmitter.removeListener('SafariViewOnDismiss', listener);
+    if (!subscriptions[event]) {
+      console.warn(`Trying to subscribe to unknown event: "${event}"`);
+      return;
+    }
+    const subscription = subscriptions[event].get(listener);
+    if (subscription) {
+      subscription.remove();
+      subscriptions[event].delete(listener);
     }
   }
 };

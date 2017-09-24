@@ -3,16 +3,32 @@
 #import <React/RCTUtils.h>
 #import <React/RCTLog.h>
 #import <React/RCTConvert.h>
-#import <React/RCTEventDispatcher.h>
 
 @implementation SafariViewManager
-@synthesize bridge = _bridge;
+{
+    bool hasListeners;
+}
 
 RCT_EXPORT_MODULE()
 
 - (dispatch_queue_t)methodQueue
 {
   return dispatch_get_main_queue();
+}
+
+- (void)startObserving
+{
+    hasListeners = YES;
+}
+
+- (void)stopObserving
+{
+    hasListeners = NO;
+}
+
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[@"onShow", @"onDismiss"];
 }
 
 RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
@@ -50,7 +66,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     }
 
     // Set modal transition style
-    if(fromBottom) {
+    if (fromBottom) {
         self.safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
 
@@ -58,16 +74,18 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [ctrl presentViewController:self.safariView animated:YES completion:nil];
 
-    [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnShow" body:nil];
+    if (hasListeners) {
+        [self sendEventWithName:@"onShow" body:nil];
+    }
 }
 
 RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
 {
     if ([SFSafariViewController class]) {
         // SafariView is available
-        return callback(@[[NSNull null], @true]);
+        callback(@[[NSNull null], @true]);
     } else {
-        return callback(@[RCTMakeError(@"[SafariView] SafariView is unavailable.", nil, nil)]);
+        callback(@[RCTMakeError(@"[SafariView] SafariView is unavailable.", nil, nil)]);
     }
 }
 
@@ -81,7 +99,9 @@ RCT_EXPORT_METHOD(dismiss)
     [controller dismissViewControllerAnimated:true completion:nil];
     NSLog(@"[SafariView] SafariView dismissed.");
 
-    [self.bridge.eventDispatcher sendAppEventWithName:@"SafariViewOnDismiss" body:nil];
+    if (hasListeners) {
+        [self sendEventWithName:@"onDismiss" body:nil];
+    }
 }
 
 @end
