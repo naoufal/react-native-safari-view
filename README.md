@@ -142,7 +142,7 @@ __Example__
 let showSubscription = SafariView.addEventListener(
   "onShow",
   () => {
-    StatusBarIOS.setStyle("light-content");
+    StatusBar.setBarStyle("light-content");
   }
 );
 ```
@@ -153,7 +153,7 @@ __Example__
 let dismissSubscription = SafariView.addEventListener(
   "onDismiss",
   () => {
-    StatusBarIOS.setStyle("default");
+    StatusBar.setBarStyle("default");
   }
 );
 ```
