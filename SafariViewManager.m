@@ -15,6 +15,16 @@ RCT_EXPORT_MODULE()
   return dispatch_get_main_queue();
 }
 
+- (UIViewController*) topMostController {
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+
+    return topController;
+}
+
 RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
 {
     UIColor *tintColorString = args[@"tintColor"];
@@ -55,7 +65,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     }
 
     // Display the Safari View
-    UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    UIViewController *ctrl = [self topMostController];
     [ctrl presentViewController:self.safariView animated:YES completion:nil];
 
     [self.bridge.eventDispatcher sendDeviceEventWithName:@"SafariViewOnShow" body:nil];
