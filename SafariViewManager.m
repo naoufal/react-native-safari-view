@@ -57,7 +57,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
 
     // Cycle through view controllers to get the view closest to the foreground
-    while (ctrl.presentedViewController) {
+    while (ctrl.presentedViewController && !ctrl.isBeingDismissed) {
         ctrl = ctrl.presentedViewController;
     }
 
