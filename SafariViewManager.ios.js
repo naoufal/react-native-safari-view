@@ -11,11 +11,6 @@ import {
 const NativeSafariViewManager = NativeModules.SafariViewManager;
 const eventEmitter = new NativeEventEmitter(NativeSafariViewManager);
 
-const subscriptions = {
-  onShow: new Map(),
-  onDismiss: new Map()
-};
-
 export default {
   show(options) {
     if (options && options.tintColor) {
@@ -53,23 +48,10 @@ export default {
   },
 
   addEventListener(event, listener) {
-    if (!subscriptions[event]) {
-      console.warn(`Trying to subscribe to unknown event: "${event}"`);
-      return;
-    }
-    const subscription = eventEmitter.addListener(event, listener);
-    subscriptions[event].set(listener, subscription);
+    return eventEmitter.addListener(event, listener);
   },
 
   removeEventListener(event, listener) {
-    if (!subscriptions[event]) {
-      console.warn(`Trying to subscribe to unknown event: "${event}"`);
-      return;
-    }
-    const subscription = subscriptions[event].get(listener);
-    if (subscription) {
-      subscription.remove();
-      subscriptions[event].delete(listener);
-    }
+    eventEmitter.removeListener(event, listener);
   }
 };
