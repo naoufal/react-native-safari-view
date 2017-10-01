@@ -33,18 +33,20 @@ RCT_EXPORT_MODULE()
 
 RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    UIColor *tintColorString = args[@"tintColor"];
-    UIColor *barTintColorString = args[@"barTintColor"];
-    BOOL fromBottom = [args[@"fromBottom"] boolValue];
-
     // Error if no url is passed
     if (!args[@"url"]) {
         reject(@"E_SAFARI_VIEW_NO_URL", @"You must specify a url.", nil);
         return;
     }
 
+    NSURL *url = [NSURL URLWithString:args[@"url"]];
+    BOOL readerMode = [args[@"readerMode"] boolValue];
+    UIColor *tintColorString = args[@"tintColor"];
+    UIColor *barTintColorString = args[@"barTintColor"];
+    BOOL fromBottom = [args[@"fromBottom"] boolValue];
+
     // Initialize the Safari View
-    self.safariView = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:args[@"url"]] entersReaderIfAvailable:[args[@"readerMode"] boolValue]];
+    self.safariView = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:readerMode];
     self.safariView.delegate = self;
 
     // Set tintColor if available
