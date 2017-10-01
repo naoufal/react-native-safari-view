@@ -48,10 +48,23 @@ export default {
   },
 
   addEventListener(event, listener) {
-    return eventEmitter.addListener(event, listener);
+    if (event === 'onShow') {
+      return eventEmitter.addListener('SafariViewOnShow', listener);
+    } else if (event === 'onDismiss') {
+      return eventEmitter.addListener('SafariViewOnDismiss', listener);
+    } else {
+      console.warn(`Trying to subscribe to unknown event: ${event}`);
+      return {
+        remove: () => {}
+      };
+    }
   },
 
   removeEventListener(event, listener) {
-    eventEmitter.removeListener(event, listener);
+    if (event === 'onShow') {
+      eventEmitter.removeListener('SafariViewOnShow', listener);
+    } else if (event === 'onDismiss') {
+      eventEmitter.removeListener('SafariViewOnDismiss', listener);
+    }
   }
 };

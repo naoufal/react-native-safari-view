@@ -28,7 +28,7 @@ RCT_EXPORT_MODULE()
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[@"onShow", @"onDismiss"];
+    return @[@"SafariViewOnShow", @"SafariViewOnDismiss"];
 }
 
 RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
@@ -75,7 +75,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     [ctrl presentViewController:self.safariView animated:YES completion:nil];
 
     if (hasListeners) {
-        [self sendEventWithName:@"onShow" body:nil];
+        [self sendEventWithName:@"SafariViewOnShow" body:nil];
     }
 }
 
@@ -100,7 +100,7 @@ RCT_EXPORT_METHOD(dismiss)
     NSLog(@"[SafariView] SafariView dismissed.");
 
     if (hasListeners) {
-        [self sendEventWithName:@"onDismiss" body:nil];
+        [self sendEventWithName:@"SafariViewOnDismiss" body:nil];
     }
 }
 
