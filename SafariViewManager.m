@@ -31,20 +31,22 @@ RCT_EXPORT_MODULE()
     return @[@"SafariViewOnShow", @"SafariViewOnDismiss"];
 }
 
-RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
+    // Error if no url is passed
+    if (!args[@"url"]) {
+        reject(@"E_SAFARI_VIEW_NO_URL", @"You must specify a url.", nil);
+        return;
+    }
+
+    NSURL *url = [NSURL URLWithString:args[@"url"]];
+    BOOL readerMode = [args[@"readerMode"] boolValue];
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
     BOOL fromBottom = [args[@"fromBottom"] boolValue];
 
-    // Error if no url is passed
-    if (!args[@"url"]) {
-        RCTLogError(@"[SafariView] You must specify a url.");
-        return;
-    }
-
     // Initialize the Safari View
-    self.safariView = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:args[@"url"]] entersReaderIfAvailable:[args[@"readerMode"] boolValue]];
+    self.safariView = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:readerMode];
     self.safariView.delegate = self;
 
     // Set tintColor if available
@@ -83,15 +85,17 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnShow" body:nil];
     }
+
+    resolve(@YES);
 }
 
-RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     if ([SFSafariViewController class]) {
         // SafariView is available
-        callback(@[[NSNull null], @true]);
+        resolve(@YES);
     } else {
-        callback(@[RCTMakeError(@"[SafariView] SafariView is unavailable.", nil, nil)]);
+        reject(@"E_SAFARI_VIEW_UNAVAILABLE", @"SafariView is unavailable", nil);
     }
 }
 

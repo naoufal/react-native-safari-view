@@ -20,15 +20,7 @@ export default {
       options.barTintColor = processColor(options.barTintColor);
     }
 
-    return new Promise((resolve, reject) => {
-      NativeSafariViewManager.show(options, (error) => {
-        if (error) {
-          return reject(error);
-        }
-
-        resolve(true);
-      });
-    });
+    return NativeSafariViewManager.show(options);
   },
 
   dismiss() {
@@ -36,15 +28,7 @@ export default {
   },
 
   isAvailable() {
-    return new Promise((resolve, reject) => {
-      NativeSafariViewManager.isAvailable((error) => {
-        if (error) {
-          return reject(error);
-        }
-
-        resolve(true);
-      });
-    });
+    return NativeSafariViewManager.isAvailable();
   },
 
   addEventListener(event, listener) {

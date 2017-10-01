@@ -5,21 +5,8 @@
  */
 'use strict';
 
-const {NativeModules} = require('react-native');
-const NativeSafariViewManager = NativeModules.SafariViewManager;
-
-var SafariViewManager = {
-  isAvailable: function() {
-    return new Promise(function(resolve, reject) {
-      NativeSafariViewManager.isAvailable(function(error) {
-        if (error) {
-          return reject(error);
-        }
-
-        resolve(false);
-      });
-    });
+export default {
+  isAvailable() {
+    return Promise.reject(new Error('SafariView is unavailable on Android'));
   }
 };
-
-module.exports = SafariViewManager;
