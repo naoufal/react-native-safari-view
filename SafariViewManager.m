@@ -72,7 +72,9 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
 
     // Display the Safari View
     UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [ctrl presentViewController:self.safariView animated:YES completion:nil];
+    [ctrl presentViewController:self.safariView animated:YES completion:^{
+        callback(@[[NSNull null], @true]);
+    }];
 
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnShow" body:nil];
