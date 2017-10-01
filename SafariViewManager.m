@@ -85,13 +85,13 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     }
 }
 
-RCT_EXPORT_METHOD(isAvailable:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     if ([SFSafariViewController class]) {
         // SafariView is available
-        callback(@[[NSNull null], @true]);
+        resolve(@YES);
     } else {
-        callback(@[RCTMakeError(@"[SafariView] SafariView is unavailable.", nil, nil)]);
+        reject(@"E_SAFARI_VIEW_UNAVAILABLE", @"SafariView is unavailable", nil);
     }
 }
 

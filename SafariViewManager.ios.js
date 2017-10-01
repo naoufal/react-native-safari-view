@@ -36,15 +36,7 @@ export default {
   },
 
   isAvailable() {
-    return new Promise((resolve, reject) => {
-      NativeSafariViewManager.isAvailable((error) => {
-        if (error) {
-          return reject(error);
-        }
-
-        resolve(true);
-      });
-    });
+    return NativeSafariViewManager.isAvailable();
   },
 
   addEventListener(event, listener) {
