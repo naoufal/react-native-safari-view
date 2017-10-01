@@ -31,7 +31,7 @@ RCT_EXPORT_MODULE()
     return @[@"SafariViewOnShow", @"SafariViewOnDismiss"];
 }
 
-RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
@@ -39,7 +39,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
 
     // Error if no url is passed
     if (!args[@"url"]) {
-        RCTLogError(@"[SafariView] You must specify a url.");
+        reject(@"E_SAFARI_VIEW_NO_URL", @"You must specify a url.", nil);
         return;
     }
 
@@ -83,6 +83,8 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args callback:(RCTResponseSenderBlock)cal
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnShow" body:nil];
     }
+
+    resolve(@YES);
 }
 
 RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)

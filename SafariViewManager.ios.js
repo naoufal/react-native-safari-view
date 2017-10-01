@@ -20,15 +20,7 @@ export default {
       options.barTintColor = processColor(options.barTintColor);
     }
 
-    return new Promise((resolve, reject) => {
-      NativeSafariViewManager.show(options, (error) => {
-        if (error) {
-          return reject(error);
-        }
-
-        resolve(true);
-      });
-    });
+    return NativeSafariViewManager.show(options);
   },
 
   dismiss() {
