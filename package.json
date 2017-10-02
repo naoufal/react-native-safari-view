@@ -1,6 +1,6 @@
 {
   "name": "react-native-safari-view",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A React Native wrapper for Safari View Controller",
   "main": "index",
   "scripts": {
