@@ -1,8 +1,20 @@
 
 #import "SafariViewManager.h"
+#if __has_include(<React/RCTUtils.h>)
 #import <React/RCTUtils.h>
+#else
+#import "RCTUtils.h"
+#endif
+#if __has_include(<React/RCTLog.h>)
 #import <React/RCTLog.h>
+#else
+#import "RCTLog.h"
+#endif
+#if __has_include(<React/RCTConvert.h>)
 #import <React/RCTConvert.h>
+#else
+#import "RCTConvert.h"
+#endif
 
 @implementation SafariViewManager
 {
