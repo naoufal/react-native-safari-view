@@ -102,14 +102,13 @@ RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromi
 
 RCT_EXPORT_METHOD(dismiss)
 {
-    [self safariViewControllerDidFinish:_safariView];
+    [_safariView dismissViewControllerAnimated:true completion:nil];
 }
 
 -(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller
 {
-    [controller dismissViewControllerAnimated:true completion:nil];
+    _safariView = nil;
     NSLog(@"[SafariView] SafariView dismissed.");
-
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnDismiss" body:nil];
     }
