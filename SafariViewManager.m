@@ -92,7 +92,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
 
 RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    if ([SFSafariViewController class]) {
+    if (@available(iOS 9.0, *)) {
         // SafariView is available
         resolve(@YES);
     } else {
