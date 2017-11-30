@@ -39,7 +39,12 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
         return;
     }
 
-    NSURL *url = [NSURL URLWithString:args[@"url"]];
+    NSMutableString *tempStr = [NSMutableString stringWithString:args[@"url"]];
+    [tempStr replaceOccurrencesOfString:@" " withString:@"+" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [tempStr length])];
+    [tempStr replaceOccurrencesOfString:@"%09%09" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [tempStr length])];
+    NSString *urlString = [[NSString stringWithFormat:@"%@",tempStr] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url = [NSURL URLWithString: urlString];
+    
     BOOL readerMode = [args[@"readerMode"] boolValue];
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
