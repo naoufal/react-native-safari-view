@@ -72,13 +72,9 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
         self.safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
 
-    UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-
-    // Cycle through view controllers to get the view closest to the foreground
-    while (ctrl.presentedViewController && !ctrl.isBeingDismissed) {
-        ctrl = ctrl.presentedViewController;
-    }
-
+    // get the view controller closest to the foreground
+    UIViewController *ctrl = RCTPresentedViewController();
+    
     // Display the Safari View
     [ctrl presentViewController:self.safariView animated:YES completion:nil];
 
