@@ -1,6 +1,6 @@
 # React Native Safari View
 
-[![react-native version](https://img.shields.io/badge/react--native-0.40-blue.svg?style=flat-square)](http://facebook.github.io/react-native/releases/0.40)
+[![react-native version](https://img.shields.io/badge/react--native-0.51-blue.svg?style=flat-square)](http://facebook.github.io/react-native/releases/0.51)
 [![npm version](https://img.shields.io/npm/v/react-native-safari-view.svg?style=flat-square)](https://www.npmjs.com/package/react-native-safari-view)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-safari-view.svg?style=flat-square)](https://www.npmjs.com/package/react-native-safari-view)
 [![Code Climate](https://img.shields.io/codeclimate/github/naoufal/react-native-safari-view.svg?style=flat-square)](https://codeclimate.com/github/naoufal/react-native-safari-view)
@@ -27,7 +27,9 @@ Due to the rapid changes being made in the React Native ecosystem, we are not of
 
 ## Usage
 ### Linking the Library
-In order to use Safari View, you must first link the library your project.  There's excellent documentation on how to do this in the [React Native Docs](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
+In order to use Safari View, you must first link the library your project. There's excellent documentation on how to do this in the [React Native Docs](https://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
+
+Please note that as of this moment, we currently do no support linking using CocaoPods. If you're using React Native 0.51.0 or up, please temporarily rename your `{project}/ios/Podfile` (if you have one) prior to `link`-ing `react-native-safari-view`.
 
 ### Displaying the Safari View
 Once you've linked the library, you'll want to make it available to your app by requiring it:
