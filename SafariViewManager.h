@@ -5,6 +5,4 @@
 
 @interface SafariViewManager : RCTEventEmitter <RCTBridgeModule, SFSafariViewControllerDelegate>
 
-@property (nonatomic) SFSafariViewController *safariView;
-
 @end

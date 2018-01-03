@@ -7,6 +7,7 @@
 @implementation SafariViewManager
 {
     bool hasListeners;
+    SFSafariViewController *_safariView;
 }
 
 RCT_EXPORT_MODULE()
