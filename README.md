@@ -65,11 +65,13 @@ class YourComponent extends Component {
 
   _pressHandler() {
     SafariView.isAvailable()
-      .then(SafariView.show({
-        url: "https://github.com/naoufal"
-      }))
+      .then(() => {
+        SafariView.show({
+          url: "https://github.com/naoufal"
+        });
+      })
       .catch(error => {
-        // Fallback WebView code for iOS 8 and earlier
+        // Fallback WebView code for iOS 8 and earlier or Android
       });
   }
 
