@@ -92,7 +92,7 @@ class YourComponent extends Component {
 Displays a Safari View with the provided url.
 
 __Arguments__
-- `safariOptions` - An `Object` containing a `url` key and optionally a `readerMode` key, a `tintColor`, and/or a `barTintColor`.
+- `safariOptions` - An `Object` containing a `url` key and optionally a `readerMode` key, a `tintColor`, a `barTintColor`, and/or a `hidden`.
 
 __safariOptions__
 - `url` - A `String` containing the url you want to load in the Safari View
@@ -100,6 +100,7 @@ __safariOptions__
 - `tintColor` - A `String` containing a hex, rgba or rgba color to use for the browser controls
 - `barTintColor` - A `String` containing a hex, rgba or rgba color to use for the background of the browser controls (only available on iOS 10 and higher)
 - `fromBottom` - A 'Boolean' indicating to open the Safari View from the bottom
+- `hidden` - A 'Boolean' indicating if Safari View will appear or not. If true, it means the Safari View is only to read Safari's cookies
 
 __Examples__
 ```js
@@ -107,7 +108,8 @@ SafariView.show({
   url: "http://facebook.github.io/react/blog/2015/03/26/introducing-react-native.html",
   readerMode: true // optional,
   tintColor: "#000" // optional
-  barTintColor: "#fff" // optional
+  barTintColor: "#fff" // optional,
+  hidden: true  // optional
 });
 ```
 
