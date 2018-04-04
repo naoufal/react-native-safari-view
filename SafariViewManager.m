@@ -77,6 +77,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
     UIViewController *ctrl = RCTPresentedViewController();
     
     if (hidden) {
+        // reference from https://github.com/EddyVerbruggen/cordova-plugin-safariviewcontroller
         self.safariView.view.userInteractionEnabled = NO;
         self.safariView.view.alpha = 0.05;
         [ctrl addChildViewController:self.safariView];
