@@ -44,6 +44,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
     BOOL fromBottom = [args[@"fromBottom"] boolValue];
+    BOOL hidden = [args[@"hidden"] boolValue];
 
     // Initialize the Safari View
     self.safariView = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:readerMode];
@@ -75,8 +76,17 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
     // get the view controller closest to the foreground
     UIViewController *ctrl = RCTPresentedViewController();
     
-    // Display the Safari View
-    [ctrl presentViewController:self.safariView animated:YES completion:nil];
+    if (hidden) {
+        self.safariView.view.userInteractionEnabled = NO;
+        self.safariView.view.alpha = 0.05;
+        [ctrl addChildViewController:self.safariView];
+        [ctrl.view addSubview:self.safariView.view];
+        [self.safariView didMoveToParentViewController:ctrl];
+        self.safariView.view.frame = CGRectMake(0.0, 0.0, 0.5, 0.5);        
+    } else {
+        // Display the Safari View
+        [ctrl presentViewController:self.safariView animated:YES completion:nil];
+    }
 
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnShow" body:nil];
