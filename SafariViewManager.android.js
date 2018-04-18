@@ -7,6 +7,6 @@
 
 export default {
   isAvailable() {
-    return Promise.reject(new Error('SafariView is unavailable on Android'));
+    return Promise.resolve(false);
   }
 };
