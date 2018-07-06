@@ -39,7 +39,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
         return;
     }
 
-    NSURL *url = [NSURL URLWithString:args[@"url"]];
+    NSURL *url = [RCTConvert NSURL:args[@"url"]];
     BOOL readerMode = [args[@"readerMode"] boolValue];
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
