@@ -7,6 +7,7 @@
 @implementation SafariViewManager
 {
     bool hasListeners;
+    SFSafariViewController *_safariView;
 }
 
 RCT_EXPORT_MODULE()
@@ -39,44 +40,44 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
         return;
     }
 
-    NSURL *url = [NSURL URLWithString:args[@"url"]];
+    NSURL *url = [RCTConvert NSURL:args[@"url"]];
     BOOL readerMode = [args[@"readerMode"] boolValue];
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
     BOOL fromBottom = [args[@"fromBottom"] boolValue];
 
     // Initialize the Safari View
-    self.safariView = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:readerMode];
-    self.safariView.delegate = self;
+    _safariView = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:readerMode];
+    _safariView.delegate = self;
 
     // Set tintColor if available
     if (tintColorString) {
         UIColor *tintColor = [RCTConvert UIColor:tintColorString];
-        if ([self.safariView respondsToSelector:@selector(setPreferredControlTintColor:)]) {
-            [self.safariView setPreferredControlTintColor:tintColor];
+        if ([_safariView respondsToSelector:@selector(setPreferredControlTintColor:)]) {
+            [_safariView setPreferredControlTintColor:tintColor];
         } else {
-            [self.safariView.view setTintColor:tintColor];
+            [_safariView.view setTintColor:tintColor];
         }
     }
 
     // Set barTintColor if available
     if (barTintColorString) {
         UIColor *barTintColor = [RCTConvert UIColor:barTintColorString];
-        if ([self.safariView respondsToSelector:@selector(setPreferredBarTintColor:)]) {
-            [self.safariView setPreferredBarTintColor:barTintColor];
+        if ([_safariView respondsToSelector:@selector(setPreferredBarTintColor:)]) {
+            [_safariView setPreferredBarTintColor:barTintColor];
         }
     }
 
     // Set modal transition style
     if (fromBottom) {
-        self.safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        _safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
 
     // get the view controller closest to the foreground
     UIViewController *ctrl = RCTPresentedViewController();
     
     // Display the Safari View
-    [ctrl presentViewController:self.safariView animated:YES completion:nil];
+    [ctrl presentViewController:_safariView animated:YES completion:nil];
 
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnShow" body:nil];
@@ -87,7 +88,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
 
 RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
 {
-    if ([SFSafariViewController class]) {
+    if (@available(iOS 9.0, *)) {
         // SafariView is available
         resolve(@YES);
     } else {
@@ -97,17 +98,15 @@ RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromi
 
 RCT_EXPORT_METHOD(dismiss)
 {
-    [self safariViewControllerDidFinish:self.safariView];
+    [_safariView dismissViewControllerAnimated:true completion:nil];
 }
 
 -(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller
 {
-    [controller dismissViewControllerAnimated:true completion:nil];
+    _safariView = nil;
     NSLog(@"[SafariView] SafariView dismissed.");
-
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnDismiss" body:nil];
     }
 }
-
 @end
