@@ -45,10 +45,24 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
     BOOL fromBottom = [args[@"fromBottom"] boolValue];
+    NSString *dismissButtonStyleString = args[@"dismissButtonStyle"];
 
     // Initialize the Safari View
     _safariView = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:readerMode];
     _safariView.delegate = self;
+
+    // set dismiss button style
+    if ([_safariView respondsToSelector:@selector(setDismissButtonStyle:)] ) {
+        if (@available(iOS 11.0, *)) {
+            if ([dismissButtonStyleString isEqual:@"Close"]) {
+                [_safariView setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleClose];
+            } else if ([dismissButtonStyleString isEqual:@"Cancel"]) {
+                [_safariView setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleCancel];
+            } else {
+                [_safariView setDismissButtonStyle:SFSafariViewControllerDismissButtonStyleDone];
+            }
+        }
+    }
 
     // Set tintColor if available
     if (tintColorString) {
@@ -75,7 +89,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
 
     // get the view controller closest to the foreground
     UIViewController *ctrl = RCTPresentedViewController();
-    
+
     // Display the Safari View
     [ctrl presentViewController:_safariView animated:YES completion:nil];
 
