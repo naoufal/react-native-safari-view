@@ -101,6 +101,7 @@ __safariOptions__
 - `barTintColor` - A `String` containing a hex, rgba or rgba color to use for the background of the browser controls (only available on iOS 10 and higher)
 - `fromBottom` - A 'Boolean' indicating to open the Safari View from the bottom
 - `dismissButtonStyle` - A `String` indicating which dismiss button style to use (iOS 11+ only). Options are `"Close"`, `"Cancel"` and `"Done"` (default)
+- `preferNative` - A 'Boolean' indicating whether to try to open universal links in the native app, before falling back to opening in Safari View
 
 __Examples__
 ```js
@@ -110,6 +111,7 @@ SafariView.show({
   tintColor: "#000", // optional
   barTintColor: "#fff", // optional
   dismissButtonStyle: "Close", // optional
+  preferNative: false, // optional
 });
 ```
 
@@ -166,4 +168,3 @@ Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com)
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
