@@ -45,6 +45,7 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
     UIColor *tintColorString = args[@"tintColor"];
     UIColor *barTintColorString = args[@"barTintColor"];
     BOOL fromBottom = [args[@"fromBottom"] boolValue];
+    BOOL preferNative = [args[@"preferNative"] boolValue] ;
 
     // Initialize the Safari View
     _safariView = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:readerMode];
@@ -73,17 +74,22 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
         _safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
     }
 
-    // get the view controller closest to the foreground
-    UIViewController *ctrl = RCTPresentedViewController();
-    
-    // Display the Safari View
-    [ctrl presentViewController:_safariView animated:YES completion:nil];
-
-    if (hasListeners) {
-        [self sendEventWithName:@"SafariViewOnShow" body:nil];
+    if (!preferNative) {
+        [self openInSafariView];
+        resolve(@YES);
+        return;
     }
 
-    resolve(@YES);
+    [[UIApplication sharedApplication] openURL:url
+                                       options:@{UIApplicationOpenURLOptionUniversalLinksOnly: @YES}
+                             completionHandler:^(BOOL success) {
+                                 if (!success) {
+                                     [self openInSafariView];
+                                 }
+
+                                 resolve(@YES);
+                             }
+    ];
 }
 
 RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
@@ -99,6 +105,19 @@ RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromi
 RCT_EXPORT_METHOD(dismiss)
 {
     [_safariView dismissViewControllerAnimated:true completion:nil];
+}
+
+-(void)openInSafariView
+{
+    // get the view controller closest to the foreground
+    UIViewController *ctrl = RCTPresentedViewController();
+
+    // Display the Safari View
+    [ctrl presentViewController:_safariView animated:YES completion:nil];
+
+    if (hasListeners) {
+        [self sendEventWithName:@"SafariViewOnShow" body:nil];
+    }
 }
 
 -(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller
