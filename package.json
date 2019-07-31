@@ -32,5 +32,6 @@
   "devDependencies": {
     "eslint": "2.0.0",
     "eslint-plugin-react": "3.0.0"
-  }
+  },
+  "types": "index.d.ts"
 }

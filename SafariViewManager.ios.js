@@ -27,6 +27,17 @@ export default {
     NativeSafariViewManager.dismiss();
   },
 
+  hide() {
+    NativeSafariViewManager.hide();
+  },
+
+  unHide() {
+    NativeSafariViewManager.unHide();
+  },
+  isInit() {
+    return NativeSafariViewManager.isInit();
+  },
+
   isAvailable() {
     return NativeSafariViewManager.isAvailable();
   },
@@ -39,7 +50,8 @@ export default {
     } else {
       console.warn(`Trying to subscribe to unknown event: ${event}`);
       return {
-        remove: () => {}
+        remove: () => {
+        }
       };
     }
   },
