@@ -71,7 +71,11 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
     // Set modal transition style
     if (fromBottom) {
 #ifdef __IPHONE_13_0
-        _safariView.modalPresentationStyle = UIModalPresentationAutomatic;
+        if (@available(iOS 13.0, *)) {
+            _safariView.modalPresentationStyle = UIModalPresentationAutomatic;
+        } else {
+            _safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        }
 #else
         _safariView.modalPresentationStyle = UIModalPresentationOverFullScreen;
 #endif
