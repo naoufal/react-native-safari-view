@@ -7,7 +7,21 @@
 @implementation SafariViewManager
 {
     bool hasListeners;
+    bool isInitialized;
     SFSafariViewController *_safariView;
+}
+
+-(id)init{
+    if ((self = [super init]))
+    {
+        isInitialized = NO;
+    }
+    return self;
+}
+
+
++ (BOOL)requiresMainQueueSetup{
+    return true;
 }
 
 RCT_EXPORT_MODULE()
@@ -75,9 +89,10 @@ RCT_EXPORT_METHOD(show:(NSDictionary *)args resolver:(RCTPromiseResolveBlock)res
 
     // get the view controller closest to the foreground
     UIViewController *ctrl = RCTPresentedViewController();
-    
+
     // Display the Safari View
     [ctrl presentViewController:_safariView animated:YES completion:nil];
+    isInitialized = YES;
 
     if (hasListeners) {
         [self sendEventWithName:@"SafariViewOnShow" body:nil];
@@ -99,6 +114,29 @@ RCT_EXPORT_METHOD(isAvailable:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromi
 RCT_EXPORT_METHOD(dismiss)
 {
     [_safariView dismissViewControllerAnimated:true completion:nil];
+    isInitialized = NO;
+}
+
+RCT_EXPORT_METHOD(hide)
+{
+    _safariView.view.hidden=YES;
+    _safariView.view.setNeedsDisplay;
+}
+
+RCT_EXPORT_METHOD(unHide)
+{
+    _safariView.view.hidden=NO;
+    _safariView.view.setNeedsDisplay;
+}
+
+RCT_EXPORT_METHOD(isInit:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject)
+{
+    if(isInitialized){
+        resolve(@YES);
+    }
+    else{
+        reject(@"E_SAFARI_VIEW_UNINITIALIZED", @"SafariView is uninitialized", nil);
+    }
 }
 
 -(void)safariViewControllerDidFinish:(nonnull SFSafariViewController *)controller

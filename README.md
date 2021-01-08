@@ -133,6 +133,30 @@ __Example__
 SafariView.dismiss()
 ```
 
+### hide()
+hide the currently active Safari View.
+
+__Example__
+```js
+SafariView.hide()
+```
+
+### unhide()
+unhide the currently active Safari View.
+
+__Example__
+```js
+SafariView.unHide()
+```
+
+### isInit()
+Checks if Safari View was initialized by .show() .
+
+__Example__
+```js
+SafariView.isInit()
+```
+
 ## Events
 The following events are fired by the Safari View.
 
