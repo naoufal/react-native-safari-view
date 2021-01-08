@@ -34,6 +34,8 @@ export default {
   addEventListener(event, listener) {
     if (event === 'onShow') {
       return eventEmitter.addListener('SafariViewOnShow', listener);
+    } else if (event === 'onRedirect') {
+      return eventEmitter.addListener('SafariViewOnRedirect', listener);
     } else if (event === 'onDismiss') {
       return eventEmitter.addListener('SafariViewOnDismiss', listener);
     } else {
@@ -47,6 +49,8 @@ export default {
   removeEventListener(event, listener) {
     if (event === 'onShow') {
       eventEmitter.removeListener('SafariViewOnShow', listener);
+    } else if (event === 'onRedirect') {
+      eventEmitter.removeListener('SafariViewOnRedirect', listener);
     } else if (event === 'onDismiss') {
       eventEmitter.removeListener('SafariViewOnDismiss', listener);
     }
