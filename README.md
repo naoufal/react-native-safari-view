@@ -44,13 +44,13 @@ SafariView.show({
 ```
 
 ### URL Change Notifications
-There isn't an API for retrieving URL changes provided by SFSafariViewController or its delegate in iOS, so there's no way to know where the user is navigating to. However, it is possible to get a notification when the Safari View navigates to an URL scheme specified by your app (e.g. `your-app-name://`). This is especially useful for implementing callback oriented flows such as in OAuth2 / OpenID Connect. 
+There isn't an API for retrieving URL changes provided by SFSafariViewController or its delegate in iOS, so there's no way to know where the user is navigating to. However, it is possible to get a notification when the Safari View navigates to an URL scheme specified by your app (e.g. `your-app-name://`). This is especially useful for implementing callback oriented flows such as in OAuth2 / OpenID Connect.
 
 To get URL notifications for your URL scheme you'll need to:
  1. Register an [URL scheme](https://developer.apple.com/library/content/documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/Inter-AppCommunication/Inter-AppCommunication.html#//apple_ref/doc/uid/TP40007072-CH6-SW10) in your Xcode Project
  2. Make sure you've set up [Linking](https://facebook.github.io/react-native/docs/linking.html) in your react-native project.
  3. Listen for URL changes in your react-native code (i.e. `Linking.addEventListener('url', eventHandler)`);
- 
+
 
 ## Example
 Using Safari View in your app will usually look like this:
@@ -100,14 +100,18 @@ __safariOptions__
 - `tintColor` - A `String` containing a hex, rgba or rgba color to use for the browser controls
 - `barTintColor` - A `String` containing a hex, rgba or rgba color to use for the background of the browser controls (only available on iOS 10 and higher)
 - `fromBottom` - A 'Boolean' indicating to open the Safari View from the bottom
+- `dismissButtonStyle` - A `String` indicating which dismiss button style to use (iOS 11+ only). Options are `"Close"`, `"Cancel"` and `"Done"` (default)
+- `preferNative` - A 'Boolean' indicating whether to try to open universal links in the native app, before falling back to opening in Safari View
 
 __Examples__
 ```js
 SafariView.show({
   url: "http://facebook.github.io/react/blog/2015/03/26/introducing-react-native.html",
-  readerMode: true // optional,
-  tintColor: "#000" // optional
-  barTintColor: "#fff" // optional
+  readerMode: true, // optional
+  tintColor: "#000", // optional
+  barTintColor: "#fff", // optional
+  dismissButtonStyle: "Close", // optional
+  preferNative: false, // optional
 });
 ```
 
@@ -164,4 +168,3 @@ Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com)
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
